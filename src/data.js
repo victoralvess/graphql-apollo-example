@@ -25,5 +25,14 @@ module.exports = [
 			id: 3,
 			username: 'phill'
 		}
+	},
+	{
+		id: 4,
+		task: 'Be happy.',
+		complete: true,
+		user: {
+			id: 2,
+			username: 'mary'
+		}
 	}
 ];
