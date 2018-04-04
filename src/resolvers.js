@@ -24,5 +24,11 @@ module.exports = {
 
 			return { ...user.toJSON(), todos: findTodos(id) };
 		}
+	},
+	User: {
+		todos: (user, { completed = null }) => {
+			if (completed === null) return user.todos;
+			return user.todos.filter(todo => todo.complete === completed);
+		}
 	}
 };

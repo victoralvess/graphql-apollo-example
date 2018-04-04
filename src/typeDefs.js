@@ -17,6 +17,6 @@ module.exports = `
 	type User {
 		id: ID!
 		username: String!
-		todos: [Todo]
+		todos(completed: Boolean): [Todo]
 	}
 `;
