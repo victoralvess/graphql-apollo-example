@@ -57,7 +57,12 @@ module.exports = {
 				return 'User deleted.';
 			} catch (error) {
 				return 'User not found.';
-			}			
+			}
+		},
+		removeTodo: async (_, { id }) => {
+			return (await Todo.findByIdAndRemove(id))
+				? 'Todo removed.'
+				: 'Todo not found.';
 		}
 	}
 };
