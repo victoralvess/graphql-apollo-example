@@ -50,6 +50,14 @@ module.exports = {
 		},
 		addTodo: async (_, todo) => {
 			return await new Todo(todo).save();
+		},
+		removeUser: async (_, { id }) => {
+			try {
+				(await new User({ id }).destroy()).toJSON();
+				return 'User deleted.';
+			} catch (error) {
+				return 'User not found.';
+			}			
 		}
 	}
 };
