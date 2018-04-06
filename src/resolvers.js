@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 const User = require('./models/User');
 const Todo = require('./models/Todo');
 
@@ -52,6 +54,12 @@ module.exports = {
 			const todosList = await user.todos;
 			if (completed === null) return todosList;
 			return todosList.filter(todo => todo.complete === completed);
+		}
+	},
+	Mutation: {
+		addUser: async (_, { username, password }) => {
+			const hash = await bcrypt.hash(password, 10);
+			return (await new User({ username, password: hash }).save()).toJSON();
 		}
 	}
 };
