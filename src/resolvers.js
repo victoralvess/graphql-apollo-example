@@ -60,6 +60,9 @@ module.exports = {
 		addUser: async (_, { username, password }) => {
 			const hash = await bcrypt.hash(password, 10);
 			return (await new User({ username, password: hash }).save()).toJSON();
+		},
+		addTodo: async (_, todo) => {
+			return await new Todo(todo).save();
 		}
 	}
 };

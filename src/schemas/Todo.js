@@ -7,7 +7,7 @@ module.exports = new mongoose.Schema({
 	},
 	complete: {
 		type: Boolean,
-		required: true
+		default: false
 	},
 	uid: {
 		type: Number,
