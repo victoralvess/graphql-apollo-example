@@ -68,13 +68,13 @@ module.exports = {
 			if (password) {
 				password = await bcrypt.hash(password, 10);
 			}
-			
-			(await new User({ id: id }).save(
-				{ username, password },
-				{ patch: true }
-			));
-			
+
+			await new User({ id: id }).save({ username, password }, { patch: true });
+
 			return findUserById(id);
+		},
+		updateTodo: async (_, { id, task }) => {
+			return await Todo.findByIdAndUpdate(id, { task }, { new: true });
 		}
 	}
 };
