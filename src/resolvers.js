@@ -63,6 +63,18 @@ module.exports = {
 			return (await Todo.findByIdAndRemove(id))
 				? 'Todo removed.'
 				: 'Todo not found.';
+		},
+		updateUser: async (_, { id, username, password }) => {
+			if (password) {
+				password = await bcrypt.hash(password, 10);
+			}
+			
+			(await new User({ id: id }).save(
+				{ username, password },
+				{ patch: true }
+			));
+			
+			return findUserById(id);
 		}
 	}
 };

@@ -11,7 +11,9 @@ module.exports = `
 		addTodo(task: String!, uid: ID!): Todo
 		addUser(username: String!, password: String!): User
 		removeUser(id: ID!): String
-		removeTodo(id: ID!): String
+		removeTodo(id: ID!): String		
+		updateTodo(id: ID!, task: String!): Todo
+		updateUser(id: ID!, username: String, password: String): User
 	}
 
 	type Todo {
