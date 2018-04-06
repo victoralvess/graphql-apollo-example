@@ -8,6 +8,8 @@ const { makeExecutableSchema } = require('graphql-tools');
 const typeDefs = require('./typeDefs');
 const resolvers = require('./resolvers');
 
+const depthLimit = require('graphql-depth-limit');
+
 app.use(bodyParser.json());
 
 const schema = makeExecutableSchema({
@@ -15,7 +17,10 @@ const schema = makeExecutableSchema({
 	resolvers
 });
 
-app.use('/graphql', graphqlExpress({ schema }))
+app.use('/graphql', graphqlExpress({
+	schema,
+	validationRules: [ depthLimit(3) ],
+}))
 app.use('/graphiql', graphiqlExpress({ endpointURL: '/graphql' }));
 
 
