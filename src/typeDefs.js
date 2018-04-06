@@ -7,6 +7,11 @@ module.exports = `
 		user(id: ID!): User
 	}
 
+	type Mutation {
+		addTodo(task: String!, uid: ID!): Todo
+		addUser(username: String!, password: String!): User
+	}
+
 	type Todo {
 		id: ID!
 		task: String!
