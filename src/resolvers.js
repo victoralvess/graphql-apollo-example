@@ -1,34 +1,57 @@
 const User = require('./models/User');
-const data = require('./data');
+const Todo = require('./models/Todo');
 
-findTodos = uid => data.filter(todo => todo.user.id == uid);
+// const data = require('./data');  // MOCK
+
+// const findTodos = uid => data.filter(todo => todo.user.id == uid);  // MOCK
+
+const findTodos = uid => Todo.find({ uid });
+
+const findUserById = async id => {
+	const user = await User.where({ id }).fetch();
+
+	if (!user) {
+		return null;
+	}
+
+	return { ...user.toJSON(), todos: await findTodos(id) };
+};
 
 module.exports = {
 	Query: {
-		allTodos: () => data,
-		completedTodos: () => {
-			return data.filter(todo => todo.complete);
+		allTodos: async () => await Todo.find(),
+		completedTodos: async () => {
+			// return data.filter(todo => todo.complete); // MOCK
+			return await Todo.find({ complete: true });
 		},
-		activeTodos: () => {
-			return data.filter(todo => !todo.complete);
+		activeTodos: async () => {
+			// return data.filter(todo => !todo.complete); // MOCK
+			return await Todo.find({ complete: false });
 		},
-		todo: (_, { id }) => {
-			return data.find(todo => todo.id == id);
+		todo: async (_, { id }) => {
+			// return data.find(todo => todo.id == id); // MOCK
+			return await Todo.findById(id);
 		},
-		user: async (_, { id }) => {
-			const user = await User.where({ id }).fetch();
-
-			if (!user) {
-				return null;
-			}
-
-			return { ...user.toJSON(), todos: findTodos(id) };
+		user: (_, { id }) => {
+			return findUserById(id);
 		}
 	},
+	Todo: {
+		user: ({ uid: id }) => {
+			return findUserById(id);
+		}
+		// USE THIS IF YOU ARE USING THE MOCK DATA
+		/*
+		user: ({ user: { id } }) => {
+			return findUserById(id);
+		}
+		*/
+	},
 	User: {
-		todos: (user, { completed = null }) => {
-			if (completed === null) return user.todos;
-			return user.todos.filter(todo => todo.complete === completed);
+		todos: async (user, { completed = null }) => {
+			const todosList = await user.todos;
+			if (completed === null) return todosList;
+			return todosList.filter(todo => todo.complete === completed);
 		}
 	}
 };
