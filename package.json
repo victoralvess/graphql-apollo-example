@@ -2,12 +2,12 @@
   "name": "graphql-apollo-example",
   "version": "1.0.0",
   "description": "Simple GraphQL Server",
-  "main": "src/index.js",
+  "main": "index.js",
   "repository": "https://github.com/victoralvess/graphql-apollo-example",
   "author": "Victor Alves <vsilva.programador@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node src/index.js"
+    "start": "node index.js"
   },
   "dependencies": {
     "apollo-server-express": "^1.3.4",
