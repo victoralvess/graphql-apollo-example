@@ -16,16 +16,16 @@ module.exports = `
 		updateUser(id: ID!, username: String, password: String): User
 	}
 
-	type Todo {
+	type Todo @cacheControl(maxAge: 240) {
 		id: ID!
 		task: String!
-		complete: Boolean
-		user: User!
+		complete: Boolean @cacheControl(maxAge: 30)
+		user: User! @cacheControl(maxAge: 3600)
 	}
 
-	type User {
+	type User @cacheControl(maxAge: 3600) {
 		id: ID!
 		username: String!
-		todos(completed: Boolean): [Todo]
+		todos(completed: Boolean): [Todo] @cacheControl(maxAge: 240)
 	}
 `;
